@@ -1,7 +1,8 @@
 package OopProject.AiPoweredEcommerceSystem.config;
 
-import com.ecommerce.security.JwtAuthFilter;
-import com.ecommerce.security.UserDetailsServiceImpl;
+import OopProject.AiPoweredEcommerceSystem.security.JwtAuthFilter;
+
+import OopProject.AiPoweredEcommerceSystem.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -115,7 +116,7 @@ public class SecurityConfig {
 
     /**
      * Exposes the {@link AuthenticationManager} as a Spring bean so it
-     * can be injected into {@link com.ecommerce.service.AuthService}.
+     * can be injected into {@link // OopProject.AiPoweredEcommerceSystem.service.AuthService}.
      */
     @Bean
     public AuthenticationManager authenticationManager(
