@@ -1,4 +1,4 @@
-package com.ecommerce.config;
+package OopProject.AiPoweredEcommerceSystem.config;
 
 import com.ecommerce.security.JwtAuthFilter;
 import com.ecommerce.security.UserDetailsServiceImpl;
