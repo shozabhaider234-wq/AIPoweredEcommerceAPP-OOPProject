@@ -1,4 +1,4 @@
 package OopProject.AiPoweredEcommerceSystem.entity;
 
-public class Whishlist {
+public class Order {
 }
