@@ -1,6 +1,6 @@
 package OopProject.AiPoweredEcommerceSystem.dto;
 
-import com.ecommerce.entity.Review;
+import OopProject.AiPoweredEcommerceSystem.entity.Review;
 
 /**
  * DTO for returning review data in API responses.

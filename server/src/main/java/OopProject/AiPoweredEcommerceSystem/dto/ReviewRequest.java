@@ -1,6 +1,6 @@
 package OopProject.AiPoweredEcommerceSystem.dto;
 
-import com.ecommerce.entity.Review;
+import OopProject.AiPoweredEcommerceSystem.entity.Review;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
