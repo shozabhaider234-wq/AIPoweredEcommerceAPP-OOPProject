@@ -1,6 +1,6 @@
 package OopProject.AiPoweredEcommerceSystem.dto;
 
-import OopProject.AiPoweredEcommerceSystem.entity.category;;
+import OopProject.AiPoweredEcommerceSystem.entity.Category;
 
 /**
  * Read-only DTO for category data returned in API responses.

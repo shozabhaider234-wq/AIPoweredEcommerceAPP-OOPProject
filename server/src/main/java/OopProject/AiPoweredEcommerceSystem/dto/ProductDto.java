@@ -1,6 +1,7 @@
 package OopProject.AiPoweredEcommerceSystem.dto;
 
 import OopProject.AiPoweredEcommerceSystem.dto.*;
+import OopProject.AiPoweredEcommerceSystem.entity.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
