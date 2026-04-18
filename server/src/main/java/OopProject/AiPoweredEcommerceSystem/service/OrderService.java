@@ -16,6 +16,7 @@ import OopProject.AiPoweredEcommerceSystem.repository.CartRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.OrderRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.UserInteractionRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.OrderServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ import java.math.BigDecimal;
  */
 @Service
 @Transactional
-public class OrderService {
+public class OrderService extends OrderServiceAbstraction{
 
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
@@ -71,6 +72,7 @@ public class OrderService {
      *
      * @throws BadRequestException if the cart is empty or any item has insufficient stock
      */
+    @Override
     public OrderDto placeOrder() {
         User user = securityUtils.getCurrentUser();
 
@@ -132,6 +134,7 @@ public class OrderService {
      *
      * @throws BadRequestException if the order is not in PENDING status
      */
+    @Override
     public OrderDto cancelOrder(Long orderId) {
         User  user  = securityUtils.getCurrentUser();
         Order order = getOwnOrderOrThrow(orderId, user);
@@ -149,6 +152,7 @@ public class OrderService {
     // ── Read ──────────────────────────────────────────────────
 
     /** Full order detail by ID (must belong to the current user). */
+    @Override
     @Transactional(readOnly = true)
     public OrderDto getOrderById(Long orderId) {
         User user = securityUtils.getCurrentUser();

@@ -9,6 +9,7 @@ import OopProject.AiPoweredEcommerceSystem.entity.User;
 import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
 import OopProject.AiPoweredEcommerceSystem.repository.UserRepository;
 import OopProject.AiPoweredEcommerceSystem.security.JwtUtil;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.AuthServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ import org.springframework.util.StringUtils;
  */
 @Service
 @Transactional
-public class AuthService {
+public class AuthService extends AuthServiceAbstraction {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
 
@@ -61,6 +62,7 @@ public class AuthService {
      * @return JWT response ready to use
      * @throws BadRequestException if the email is already registered
      */
+    @Override
     public AuthResponse register(RegisterRequest req) {
         // Guard: email must be unique
         if (userRepository.existsByEmail(req.getEmail())) {
@@ -93,6 +95,7 @@ public class AuthService {
      * @param req login credentials (email + password)
      * @return JWT response
      */
+    @Override
     public AuthResponse login(AuthRequest req) {
         // Delegates to DaoAuthenticationProvider → UserDetailsServiceImpl
         authManager.authenticate(
@@ -112,6 +115,7 @@ public class AuthService {
     /**
      * Returns the profile of the currently authenticated user.
      */
+    @Override
     @Transactional(readOnly = true)
     public UserDto getProfile() {
         return UserDto.from(securityUtils.getCurrentUser());
@@ -123,6 +127,7 @@ public class AuthService {
      * @param req update request — newPassword may be null (no change)
      * @return updated profile
      */
+    @Override
     public UserDto updateProfile(UpdateProfileRequest req) {
         User user = securityUtils.getCurrentUser();
         user.setName(req.getName());

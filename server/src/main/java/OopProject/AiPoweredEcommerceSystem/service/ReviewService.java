@@ -11,6 +11,7 @@ import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
 import OopProject.AiPoweredEcommerceSystem.exception.UnauthorizedException;
 import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.ReviewRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.ReviewServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ReviewService {
+public class ReviewService extends ReviewServiceAbstraction {
 
     private final ReviewRepository  reviewRepository;
     private final ProductRepository productRepository;
@@ -44,6 +45,7 @@ public class ReviewService {
     }
 
     /** Add a new review for a product. */
+    @Override
     public ReviewDto addReview(Long productId, ReviewRequest req) {
         User    user    = securityUtils.getCurrentUser();
         Product product = productRepository.findById(productId)
@@ -63,6 +65,7 @@ public class ReviewService {
     }
 
     /** Update the authenticated user's existing review. */
+    @Override
     public ReviewDto updateReview(Long reviewId, ReviewRequest req) {
         User   user   = securityUtils.getCurrentUser();
         Review review = reviewRepository.findById(reviewId)
@@ -78,6 +81,7 @@ public class ReviewService {
     }
 
     /** Delete the authenticated user's review. */
+    @Override
     public void deleteReview(Long reviewId) {
         User   user   = securityUtils.getCurrentUser();
         Review review = reviewRepository.findById(reviewId)
@@ -91,6 +95,7 @@ public class ReviewService {
     }
 
     /** Get paginated reviews for a product — newest first. */
+    @Override
     @Transactional(readOnly = true)
     public PagedResponse<ReviewDto> getProductReviews(Long productId, int page, int size) {
         Product  product  = productRepository.findById(productId)

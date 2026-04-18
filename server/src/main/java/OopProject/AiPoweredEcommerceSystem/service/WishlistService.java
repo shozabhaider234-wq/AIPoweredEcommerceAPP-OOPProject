@@ -8,6 +8,7 @@ import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
 import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
 import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.WishlistRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.WishlistServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class WishlistService {
+public class WishlistService extends WishlistServiceAbstraction {
 
     private final WishlistRepository wishlistRepository;
     private final ProductRepository  productRepository;
@@ -43,6 +44,7 @@ public class WishlistService {
      *
      * @throws BadRequestException if the product is already in the wishlist
      */
+    @Override
     public void addToWishlist(Long productId) {
         User user = securityUtils.getCurrentUser();
 
@@ -60,6 +62,7 @@ public class WishlistService {
      * Remove a product from the current user's wishlist.
      * Silently succeeds if the product wasn't in the wishlist.
      */
+    @Override
     public void removeFromWishlist(Long productId) {
         User user = securityUtils.getCurrentUser();
         wishlistRepository.deleteByUserIdAndProductId(user.getId(), productId);
@@ -68,6 +71,7 @@ public class WishlistService {
     /**
      * Returns all products saved in the current user's wishlist.
      */
+    @Override
     @Transactional(readOnly = true)
     public List<ProductDto> getWishlist() {
         User user = securityUtils.getCurrentUser();

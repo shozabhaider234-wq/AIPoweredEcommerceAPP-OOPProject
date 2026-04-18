@@ -13,6 +13,7 @@ import OopProject.AiPoweredEcommerceSystem.repository.CartItemRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.CartRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.UserInteractionRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.CartServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class CartService {
+public class CartService extends CartServiceAbstraction {
 
     private final CartRepository            cartRepository;
     private final CartItemRepository        cartItemRepository;
@@ -51,6 +52,7 @@ public class CartService {
     /**
      * Returns the current user's cart. Creates a new empty cart if none exists.
      */
+    @Override
     public CartDto getCart() {
         User user = securityUtils.getCurrentUser();
         Cart cart = cartRepository.findByUser(user)
@@ -67,6 +69,7 @@ public class CartService {
      * @param quantity  units to add (must be ≥ 1)
      * @throws BadRequestException if stock is insufficient
      */
+    @Override
     public CartDto addToCart(Long productId, int quantity) {
         User user = securityUtils.getCurrentUser();
 
@@ -101,6 +104,7 @@ public class CartService {
      * Updates the quantity of an existing cart item.
      * Setting quantity to 0 or less removes the item entirely.
      */
+    @Override
     public CartDto updateQuantity(Long cartItemId, int quantity) {
         User     user = securityUtils.getCurrentUser();
         CartItem item = cartItemRepository.findById(cartItemId)
@@ -125,6 +129,7 @@ public class CartService {
     /**
      * Removes a specific line item from the cart.
      */
+    @Override
     public CartDto removeFromCart(Long cartItemId) {
         User     user = securityUtils.getCurrentUser();
         CartItem item = cartItemRepository.findById(cartItemId)

@@ -15,6 +15,7 @@ import OopProject.AiPoweredEcommerceSystem.repository.CategoryRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.SellerRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.UserInteractionRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.ProductServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ import java.math.BigDecimal;
  */
 @Service
 @Transactional
-public class ProductService {
+public class ProductService extends ProductServiceAbstraction {
 
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
@@ -69,6 +70,7 @@ public class ProductService {
      * @return the persisted product as a DTO
      * @throws BadRequestException if the current user has no seller profile
      */
+    @Override
     public ProductDto createProduct(ProductRequest req) {
         User   user   = securityUtils.getCurrentUser();
         Seller seller = sellerRepository.findByUser(user)
@@ -101,6 +103,7 @@ public class ProductService {
     /**
      * Updates an existing product owned by the authenticated seller.
      */
+    @Override
     public ProductDto updateProduct(Long productId, ProductRequest req) {
         Product product = getOwnedProductOrThrow(productId);
 
@@ -127,6 +130,7 @@ public class ProductService {
      * Deletes a product owned by the authenticated seller.
      * Cascades to ProductImage rows via JPA.
      */
+    @Override
     public void deleteProduct(Long productId) {
         Product product = getOwnedProductOrThrow(productId);
         productRepository.delete(product);
@@ -144,6 +148,7 @@ public class ProductService {
      * @param productId the product to fetch
      * @param userId    optional — the viewing user's ID (null for anonymous)
      */
+    @Override
     @Transactional(readOnly = true)
     public ProductDto getProductById(Long productId, Long userId) {
         Product product = productRepository.findById(productId)
@@ -171,6 +176,7 @@ public class ProductService {
     /**
      * Returns a paginated list of all products, sorted by the given field.
      */
+    @Override
     @Transactional(readOnly = true)
     public PagedResponse<ProductDto> getAllProducts(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
@@ -190,6 +196,7 @@ public class ProductService {
      * @param size       number of results per page
      * @param sortBy     field name to sort by (e.g. "price", "name")
      */
+    @Override
     @Transactional(readOnly = true)
     public PagedResponse<ProductDto> searchProducts(String name,
                                                      Long categoryId,

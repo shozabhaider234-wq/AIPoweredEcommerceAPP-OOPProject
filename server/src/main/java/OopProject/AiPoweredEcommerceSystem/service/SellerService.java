@@ -7,6 +7,7 @@ import OopProject.AiPoweredEcommerceSystem.entity.User;
 import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
 import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
 import OopProject.AiPoweredEcommerceSystem.repository.SellerRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.SellerServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class SellerService {
+public class SellerService extends SellerServiceAbstraction {
 
     private final SellerRepository sellerRepository;
     private final SecurityUtils    securityUtils;
@@ -34,6 +35,7 @@ public class SellerService {
      *
      * @throws BadRequestException if a profile already exists
      */
+    @Override
     public SellerDto createSellerProfile(SellerRequest req) {
         User user = securityUtils.getCurrentUser();
 
@@ -51,7 +53,7 @@ public class SellerService {
      *
      * @throws ResourceNotFoundException if no profile exists yet
      */
-
+    @Override
     public SellerDto updateSellerProfile(SellerRequest req) {
         User   user   = securityUtils.getCurrentUser();
         Seller seller = sellerRepository.findByUser(user)
@@ -64,6 +66,7 @@ public class SellerService {
     }
 
     /** Returns the authenticated user's seller profile. */
+    @Override
     @Transactional(readOnly = true)
     public SellerDto getMyProfile() {
         User user = securityUtils.getCurrentUser();
@@ -73,6 +76,7 @@ public class SellerService {
     }
 
     /** Returns any seller's public profile by their seller ID. */
+    @Override
     @Transactional(readOnly = true)
     public SellerDto getSellerById(Long id) {
         return SellerDto.from(sellerRepository.findById(id)

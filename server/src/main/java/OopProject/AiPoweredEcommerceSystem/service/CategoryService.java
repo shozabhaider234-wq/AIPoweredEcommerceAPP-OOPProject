@@ -6,6 +6,7 @@ import OopProject.AiPoweredEcommerceSystem.entity.Category;
 import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
 import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
 import OopProject.AiPoweredEcommerceSystem.repository.CategoryRepository;
+import OopProject.AiPoweredEcommerceSystem.service.Abstraction.CategoryServiceAbstraction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +20,14 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class CategoryService {
+public class CategoryService extends CategoryServiceAbstraction {
 
     private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-
+    @Override
     public CategoryDto createCategory(CategoryRequest req) {
         if (categoryRepository.existsByName(req.getName())) {
             throw new BadRequestException("Category already exists: " + req.getName());
@@ -34,7 +35,7 @@ public class CategoryService {
         Category category = new Category(req.getName(), req.getDescription());
         return CategoryDto.from(categoryRepository.save(category));
     }
-
+    @Override
     public CategoryDto updateCategory(Long id, CategoryRequest req) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", id));
@@ -42,21 +43,21 @@ public class CategoryService {
         category.setDescription(req.getDescription());
         return CategoryDto.from(categoryRepository.save(category));
     }
-
+    @Override
     public void deleteCategory(Long id) {
         if (!categoryRepository.existsById(id)) {
             throw new ResourceNotFoundException("Category", id);
         }
         categoryRepository.deleteById(id);
     }
-
+    @Override
     @Transactional(readOnly = true)
     public List<CategoryDto> getAllCategories() {
         return categoryRepository.findAll().stream()
                 .map(CategoryDto::from)
                 .collect(Collectors.toList());
     }
-
+    @Override
     @Transactional(readOnly = true)
     public CategoryDto getCategoryById(Long id) {
         return CategoryDto.from(categoryRepository.findById(id)
