@@ -155,7 +155,7 @@ public class ProductService {
             // Interaction requires a managed User entity — skip if user is anonymous
             try {
                 // We resolve the user lazily to avoid a DB hit on every anonymous call
-                com.ecommerce.entity.User user = new com.ecommerce.entity.User();
+                User user = new User();
                 user.setId(userId);
                 // Use a proxy reference so we don't need a full load
                 interactionRepository.save(

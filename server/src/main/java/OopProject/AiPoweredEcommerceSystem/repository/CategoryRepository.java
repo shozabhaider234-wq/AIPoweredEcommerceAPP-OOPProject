@@ -1,4 +1,4 @@
-package OopProject.AiPoweredEcommeerceSystem.repository;
+package OopProject.AiPoweredEcommerceSystem.repository;
 
 import OopProject.AiPoweredEcommerceSystem.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
