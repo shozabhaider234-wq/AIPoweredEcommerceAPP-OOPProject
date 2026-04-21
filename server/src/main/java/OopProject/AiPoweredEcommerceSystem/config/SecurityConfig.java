@@ -74,6 +74,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/api/seller/orders/**").hasRole("SELLER")
 
                         // ── Swagger / Actuator (optional, enable as needed) ──
                         // .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
