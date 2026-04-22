@@ -1,7 +1,7 @@
-package com.ecommerce.dto;
+package OopProject.AiPoweredEcommerceSystem.dto;
 
-import com.ecommerce.entity.Order;
-import com.ecommerce.entity.OrderItem;
+import OopProject.AiPoweredEcommerceSystem.entity.Order;
+import OopProject.AiPoweredEcommerceSystem.entity.OrderItem;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

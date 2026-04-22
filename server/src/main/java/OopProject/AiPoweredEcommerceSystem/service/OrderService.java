@@ -1,16 +1,16 @@
-package com.ecommerce.service;
+package OopProject.AiPoweredEcommerceSystem.service;
 
-import com.ecommerce.dto.OrderDto;
-import com.ecommerce.dto.PagedResponse;
-import com.ecommerce.dto.PlaceOrderRequest;
-import com.ecommerce.dto.UpdateOrderStatusRequest;
-import com.ecommerce.dto.SellerCancelOrderRequest;
-import com.ecommerce.entity.*;
-import com.ecommerce.exception.BadRequestException;
-import com.ecommerce.exception.ResourceNotFoundException;
-import com.ecommerce.exception.UnauthorizedException;
-import com.ecommerce.repository.*;
-import com.ecommerce.util.SecurityUtils;
+import OopProject.AiPoweredEcommerceSystem.dto.OrderDto;
+import OopProject.AiPoweredEcommerceSystem.dto.PagedResponse;
+import OopProject.AiPoweredEcommerceSystem.dto.PlaceOrderRequest;
+import OopProject.AiPoweredEcommerceSystem.dto.UpdateOrderStatusRequest;
+import OopProject.AiPoweredEcommerceSystem.dto.SellerCancelOrderRequest;
+import OopProject.AiPoweredEcommerceSystem.entity.*;
+import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
+import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
+import OopProject.AiPoweredEcommerceSystem.exception.UnauthorizedException;
+import OopProject.AiPoweredEcommerceSystem.repository.*;
+import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -292,8 +292,9 @@ public class OrderService {
         Seller   seller   = getAuthenticatedSeller();
         Pageable pageable = PageRequest.of(page, size);
         return PagedResponse.of(
-                orderRepository.findOrdersBySellerId(seller.getId(), pageable)
+                orderRepository.findDistinctByItems_Product_Seller_Id(seller.getId(), pageable)
                         .map(OrderDto::from));
+
     }
     /**
      * Returns the full detail of one order, verifying the seller has a product in it.

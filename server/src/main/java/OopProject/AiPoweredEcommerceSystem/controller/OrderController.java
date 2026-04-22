@@ -1,10 +1,10 @@
-package com.ecommerce.controller;
+package OopProject.AiPoweredEcommerceSystem.controller;
 
-import com.ecommerce.dto.ApiResponse;
-import com.ecommerce.dto.OrderDto;
-import com.ecommerce.dto.PagedResponse;
-import com.ecommerce.dto.PlaceOrderRequest;
-import com.ecommerce.service.OrderService;
+import OopProject.AiPoweredEcommerceSystem.dto.ApiResponse;
+import OopProject.AiPoweredEcommerceSystem.dto.OrderDto;
+import OopProject.AiPoweredEcommerceSystem.dto.PagedResponse;
+import OopProject.AiPoweredEcommerceSystem.dto.PlaceOrderRequest;
+import OopProject.AiPoweredEcommerceSystem.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

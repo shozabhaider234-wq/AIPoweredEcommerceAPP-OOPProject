@@ -1,4 +1,4 @@
-package com.ecommerce.entity;
+package OopProject.AiPoweredEcommerceSystem.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

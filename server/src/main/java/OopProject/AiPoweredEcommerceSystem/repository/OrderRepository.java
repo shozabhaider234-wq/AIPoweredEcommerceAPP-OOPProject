@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    /** Paginated order history for a single user, sorted by the caller. */
     Page<Order> findByUser(User user, Pageable pageable);
+
+    Page<Order> findDistinctByItems_Product_Seller_Id(Long sellerId, Pageable pageable);
 }

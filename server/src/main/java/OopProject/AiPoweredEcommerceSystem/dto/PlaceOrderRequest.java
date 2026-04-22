@@ -1,4 +1,4 @@
-package com.ecommerce.dto;
+package OopProject.AiPoweredEcommerceSystem.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
