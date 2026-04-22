@@ -1,7 +1,7 @@
-package OopProject.AiPoweredEcommerceSystem.dto;
+package com.ecommerce.dto;
 
-import OopProject.AiPoweredEcommerceSystem.entity.Order;
-import OopProject.AiPoweredEcommerceSystem.entity.OrderItem;
+import com.ecommerce.entity.Order;
+import com.ecommerce.entity.OrderItem;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,6 +19,32 @@ public class OrderDto {
     private LocalDateTime  createdAt;
     private List<ItemDto>  items;
 
+    //New attributes
+    private LocalDateTime  updatedAt;
+    // ── Shipping ──────────────────────────────────────────────
+    private String shippingAddress;
+    private String shippingCity;
+    private String shippingPostalCode;
+    private String contactPhone;
+    private String deliveryNotes;
+
+    // ── Payment ───────────────────────────────────────────────
+    private String paymentMethod;
+    private String paymentStatus;
+
+    // ── Cancellation ──────────────────────────────────────────
+    /** Reason supplied by the seller (or null for customer cancellations). */
+    private String cancellationReason;
+    /** "CUSTOMER" or "SELLER" — who cancelled this order. */
+    private String cancelledBy;
+
+    // ── Status note (set by seller on status updates) ─────────
+    private String statusNote;
+
+    // ── Customer info (shown to seller) ──────────────────────
+    private String customerName;
+    private String customerEmail;
+
     // ── Factory ───────────────────────────────────────────────
 
     public static OrderDto from(Order order) {
@@ -27,6 +53,35 @@ public class OrderDto {
         dto.status     = order.getStatus().name();
         dto.totalPrice = order.getTotalPrice();
         dto.createdAt  = order.getCreatedAt();
+
+        // Newly added
+        dto.updatedAt           = order.getUpdatedAt();
+
+        // Shipping
+        dto.shippingAddress     = order.getShippingAddress();
+        dto.shippingCity        = order.getShippingCity();
+        dto.shippingPostalCode  = order.getShippingPostalCode();
+        dto.contactPhone        = order.getContactPhone();
+        dto.deliveryNotes       = order.getDeliveryNotes();
+
+        // Payment
+        dto.paymentMethod       = order.getPaymentMethod() != null
+                ? order.getPaymentMethod().name() : null;
+        dto.paymentStatus       = order.getPaymentStatus() != null
+                ? order.getPaymentStatus().name() : null;
+
+        // Cancellation
+        dto.cancellationReason  = order.getCancellationReason();
+        dto.cancelledBy         = order.getCancelledBy();
+
+        // Status note
+        dto.statusNote          = order.getStatusNote();
+
+        // Customer info (for seller dashboard)
+        if (order.getUser() != null) {
+            dto.customerName  = order.getUser().getName();
+            dto.customerEmail = order.getUser().getEmail();
+        }
         dto.items      = order.getItems().stream()
                 .map(ItemDto::from)
                 .collect(Collectors.toList());
@@ -84,5 +139,41 @@ public class OrderDto {
 
     public List<ItemDto> getItems()                   { return items; }
     public void setItems(List<ItemDto> items)         { this.items = items; }
-}
 
+    // New getters and setters
+    public LocalDateTime getUpdatedAt()                   { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt)     { this.updatedAt = updatedAt; }
+
+    public String getShippingCity()                            { return shippingCity; }
+    public void setShippingCity(String shippingCity)           { this.shippingCity = shippingCity; }
+
+    public String getShippingPostalCode()                      { return shippingPostalCode; }
+    public void setShippingPostalCode(String shippingPostalCode) { this.shippingPostalCode = shippingPostalCode; }
+
+    public String getContactPhone()                            { return contactPhone; }
+    public void setContactPhone(String contactPhone)           { this.contactPhone = contactPhone; }
+
+    public String getDeliveryNotes()                           { return deliveryNotes; }
+    public void setDeliveryNotes(String deliveryNotes)         { this.deliveryNotes = deliveryNotes; }
+
+    public String getPaymentMethod()                           { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod)         { this.paymentMethod = paymentMethod; }
+
+    public String getPaymentStatus()                           { return paymentStatus; }
+    public void setPaymentStatus(String paymentStatus)         { this.paymentStatus = paymentStatus; }
+
+    public String getCancellationReason()                      { return cancellationReason; }
+    public void setCancellationReason(String cancellationReason) { this.cancellationReason = cancellationReason; }
+
+    public String getCancelledBy()                             { return cancelledBy; }
+    public void setCancelledBy(String cancelledBy)             { this.cancelledBy = cancelledBy; }
+
+    public String getStatusNote()                              { return statusNote; }
+    public void setStatusNote(String statusNote)               { this.statusNote = statusNote; }
+
+    public String getCustomerName()                            { return customerName; }
+    public void setCustomerName(String customerName)           { this.customerName = customerName; }
+
+    public String getCustomerEmail()                           { return customerEmail; }
+    public void setCustomerEmail(String customerEmail)         { this.customerEmail = customerEmail; }
+}
