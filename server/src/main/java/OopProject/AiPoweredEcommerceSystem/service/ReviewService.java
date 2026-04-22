@@ -6,11 +6,13 @@ import OopProject.AiPoweredEcommerceSystem.dto.ReviewRequest;
 import OopProject.AiPoweredEcommerceSystem.entity.Product;
 import OopProject.AiPoweredEcommerceSystem.entity.Review;
 import OopProject.AiPoweredEcommerceSystem.entity.User;
+import OopProject.AiPoweredEcommerceSystem.entity.Order;
 import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
 import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
 import OopProject.AiPoweredEcommerceSystem.exception.UnauthorizedException;
 import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.ReviewRepository;
+import OopProject.AiPoweredEcommerceSystem.repository.OrderRepository;
 import OopProject.AiPoweredEcommerceSystem.service.Abstraction.ReviewServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
 import org.springframework.data.domain.PageRequest;
@@ -35,13 +37,16 @@ public class ReviewService extends ReviewServiceAbstraction {
     private final ReviewRepository  reviewRepository;
     private final ProductRepository productRepository;
     private final SecurityUtils     securityUtils;
+    private final OrderRepository   orderRepository;
 
     public ReviewService(ReviewRepository reviewRepository,
                          ProductRepository productRepository,
-                         SecurityUtils securityUtils) {
+                         SecurityUtils securityUtils,
+                         OrderRepository orderRepository) {
         this.reviewRepository  = reviewRepository;
         this.productRepository = productRepository;
         this.securityUtils     = securityUtils;
+        this.orderRepository   = orderRepository;
     }
 
     /** Add a new review for a product. */
@@ -50,6 +55,12 @@ public class ReviewService extends ReviewServiceAbstraction {
         User    user    = securityUtils.getCurrentUser();
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", productId));
+
+        if (!orderRepository.existsByUserAndItemsProductAndStatus(
+                user, product, Order.OrderStatus.DELIVERED)) {
+            throw new BadRequestException(
+                    "You can only review products you have purchased and received");
+        }
 
         if (reviewRepository.existsByUserAndProduct(user, product)) {
             throw new BadRequestException("You have already reviewed this product");
