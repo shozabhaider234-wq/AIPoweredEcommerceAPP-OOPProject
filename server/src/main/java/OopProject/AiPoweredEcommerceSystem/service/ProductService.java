@@ -149,7 +149,7 @@ public class ProductService extends ProductServiceAbstraction {
      * @param userId    optional — the viewing user's ID (null for anonymous)
      */
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public ProductDto getProductById(Long productId, Long userId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException(

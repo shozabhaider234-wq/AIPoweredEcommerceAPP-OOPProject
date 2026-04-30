@@ -140,6 +140,7 @@ public class CartService extends CartServiceAbstraction {
         }
 
         cartItemRepository.delete(item);
+        cartItemRepository.flush();
         return CartDto.from(cartRepository.findByUser(user).orElseThrow());
     }
 }
