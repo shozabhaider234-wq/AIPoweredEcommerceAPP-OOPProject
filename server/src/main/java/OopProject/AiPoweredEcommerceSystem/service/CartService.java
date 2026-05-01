@@ -90,6 +90,7 @@ public class CartService extends CartServiceAbstraction {
                 () -> cartItemRepository.save(new CartItem(cart, product, quantity))
         );
 
+
         // Track ADD_TO_CART for recommendation engine
         interactionRepository.save(new UserInteraction(
                 user, product, UserInteraction.InteractionType.ADD_TO_CART));

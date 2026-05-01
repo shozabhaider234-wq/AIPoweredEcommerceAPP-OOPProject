@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * DTO representation of a user's shopping cart.
  * Includes line items and a computed grand total.
  */
-// TODO: Fix commented out code in Item.from() method
+
 public class CartDto {
 
     private Long           cartId;
@@ -48,17 +48,11 @@ public class CartDto {
         public static ItemDto from(CartItem item) {
             ItemDto d = new ItemDto();
             d.cartItemId   = item.getId();
-            d.productId    = 234L;
-            d.productName  = "RANDOM_STRING";
-            d.unitPrice    = BigDecimal.valueOf(32);
-            d.quantity     = item.getQuantity();
-            d.lineTotal    = BigDecimal.valueOf(32);
-//            TODO: uncomment the following code
-//            d.productId    = item.getProduct().getId();
-//            d.productName  = item.getProduct().getName();
-//            d.unitPrice    = item.getProduct().getPrice();
-//            d.lineTotal    = item.getProduct().getPrice()
-//                    .multiply(BigDecimal.valueOf(item.getQuantity()));
+           d.productId    = item.getProduct().getId();
+          d.productName  = item.getProduct().getName();
+           d.unitPrice    = item.getProduct().getPrice();
+            d.lineTotal    = item.getProduct().getPrice()
+                   .multiply(BigDecimal.valueOf(item.getQuantity()));
             return d;
         }
 
