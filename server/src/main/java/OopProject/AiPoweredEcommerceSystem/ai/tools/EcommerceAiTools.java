@@ -1,9 +1,9 @@
-package com.ecommerce.ai.tools;
+package OopProject.AiPoweredEcommerceSystem.ai.tools;
 
-import com.ecommerce.ai.recommendation.RecommendationService;
-import com.ecommerce.entity.Product;
-import com.ecommerce.repository.OrderRepository;
-import com.ecommerce.repository.ProductRepository;
+import OopProject.AiPoweredEcommerceSystem.ai.recommendation.RecommendationService;
+import OopProject.AiPoweredEcommerceSystem.entity.Product;
+import OopProject.AiPoweredEcommerceSystem.repository.OrderRepository;
+import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;

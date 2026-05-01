@@ -64,6 +64,21 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> images = new ArrayList<>();
 
+    @OneToMany(mappedBy="product" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<UserInteraction> userInteractions;
+
+    @OneToMany(mappedBy="product" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<CartItem> cartItems;
+
+    @OneToMany(mappedBy="product" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy="product" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy="product" , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private List<Wishlist> wishlists;
+
     // ── Constructors ──────────────────────────────────────────
 
     public Product() {}

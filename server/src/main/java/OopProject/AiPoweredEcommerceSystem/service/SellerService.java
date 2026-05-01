@@ -1,14 +1,20 @@
 package OopProject.AiPoweredEcommerceSystem.service;
 
+import OopProject.AiPoweredEcommerceSystem.dto.PagedResponse;
+import OopProject.AiPoweredEcommerceSystem.dto.ProductDto;
 import OopProject.AiPoweredEcommerceSystem.dto.SellerDto;
 import OopProject.AiPoweredEcommerceSystem.dto.SellerRequest;
 import OopProject.AiPoweredEcommerceSystem.entity.Seller;
 import OopProject.AiPoweredEcommerceSystem.entity.User;
 import OopProject.AiPoweredEcommerceSystem.exception.BadRequestException;
 import OopProject.AiPoweredEcommerceSystem.exception.ResourceNotFoundException;
+import OopProject.AiPoweredEcommerceSystem.repository.ProductRepository;
 import OopProject.AiPoweredEcommerceSystem.repository.SellerRepository;
 import OopProject.AiPoweredEcommerceSystem.service.Abstraction.SellerServiceAbstraction;
 import OopProject.AiPoweredEcommerceSystem.util.SecurityUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +30,12 @@ public class SellerService extends SellerServiceAbstraction {
 
     private final SellerRepository sellerRepository;
     private final SecurityUtils    securityUtils;
+    private final ProductRepository productRepository;
 
-    public SellerService(SellerRepository sellerRepository, SecurityUtils securityUtils) {
+    public SellerService(SellerRepository sellerRepository, SecurityUtils securityUtils,ProductRepository productRepository) {
         this.sellerRepository = sellerRepository;
         this.securityUtils    = securityUtils;
+        this.productRepository=productRepository;
     }
 
     /**
@@ -81,6 +89,23 @@ public class SellerService extends SellerServiceAbstraction {
     public SellerDto getSellerById(Long id) {
         return SellerDto.from(sellerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Seller", id)));
+    }
+    @Transactional(readOnly = true)
+    public PagedResponse<ProductDto> getSellerProducts(int page, int size) {
+
+        User user = securityUtils.getCurrentUser();
+        System.out.println(user);
+        Seller seller=sellerRepository.findByUser(user)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Seller profile not found for current user"));
+
+        Pageable pageable = PageRequest.of(page, size);
+
+
+        Page<ProductDto> responses= productRepository.findBySeller(seller,pageable).map(ProductDto ::from);
+
+        return PagedResponse.of(responses);
+
     }
 }
 

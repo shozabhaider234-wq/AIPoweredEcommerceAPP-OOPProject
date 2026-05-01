@@ -1,8 +1,8 @@
-package com.ecommerce.ai.chatbot;
+package OopProject.AiPoweredEcommerceSystem.ai.chatbot;
 
-import com.ecommerce.ai.tools.EcommerceAiTools;
-import com.ecommerce.dto.ChatRequest;
-import com.ecommerce.dto.ChatResponse;
+import OopProject.AiPoweredEcommerceSystem.ai.tools.EcommerceAiTools;
+import OopProject.AiPoweredEcommerceSystem.dto.ChatRequest;
+import OopProject.AiPoweredEcommerceSystem.dto.ChatResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
