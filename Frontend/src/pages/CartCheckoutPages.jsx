@@ -53,8 +53,11 @@ export function CartPage() {
                       <button className="btn btn-ghost" style={{ padding: '6px 12px', borderRadius: 0 }}
                         onClick={() => updateItem(item.cartItemId, item.quantity - 1)} disabled={item.quantity <= 1}>−</button>
                       <span style={{ padding: '6px 12px', fontWeight: 700, minWidth: 32, textAlign: 'center', fontSize: 14 }}>{item.quantity}</span>
+                        
                       <button className="btn btn-ghost" style={{ padding: '6px 12px', borderRadius: 0 }}
-                        onClick={() => updateItem(item.cartItemId, item.quantity + 1)}>+</button>
+                        onClick={() => {updateItem(item.cartItemId, item.quantity + 1)}
+                        }>+</button>
+
                     </div>
                     <Price amount={item.lineTotal} style={{ fontSize: 16 }} />
                     <button className="btn btn-ghost" style={{ padding: 8, color: 'var(--red)' }}

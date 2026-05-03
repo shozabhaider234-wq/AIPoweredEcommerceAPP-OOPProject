@@ -51,6 +51,7 @@ public class CartDto {
            d.productId    = item.getProduct().getId();
           d.productName  = item.getProduct().getName();
            d.unitPrice    = item.getProduct().getPrice();
+           d.quantity= item.getQuantity();
             d.lineTotal    = item.getProduct().getPrice()
                    .multiply(BigDecimal.valueOf(item.getQuantity()));
             return d;
