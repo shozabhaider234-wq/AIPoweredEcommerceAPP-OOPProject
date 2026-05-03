@@ -114,7 +114,7 @@ export default function HomePage() {
                     width: '100%',
                   }}>
                     <img
-                      src="/public/homepagebg.png"
+                      src="/homepagebg.png"
                       alt="Hero"
                        style={{
     position: 'absolute',
