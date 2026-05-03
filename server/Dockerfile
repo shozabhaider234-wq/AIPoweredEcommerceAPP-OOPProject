@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Build the project (skip tests for faster build)
-RUN gradle clean build -x test
+RUN ./gradlew clean build -x test
 
 # ---------- STAGE 2: Run ----------
 FROM eclipse-temurin:21-jdk-jammy
