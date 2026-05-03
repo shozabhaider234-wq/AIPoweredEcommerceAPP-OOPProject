@@ -85,7 +85,8 @@ public class SecurityConfig {
                 )
 
                 // Register the JWT filter before Spring's default auth filter
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        ;
 
         return http.build();
     }
