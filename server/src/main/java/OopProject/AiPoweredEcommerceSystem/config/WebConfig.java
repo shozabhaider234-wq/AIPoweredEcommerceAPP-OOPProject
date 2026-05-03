@@ -44,13 +44,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceHandler("/images/products/**")
                 .addResourceLocations("file:" + uploadDir + "/");
 
-       
+
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/api/**")
-                .allowedOrigins("https://your-vercel-app.vercel.app")
+                .allowedOrigins("https://ai-powered-ecommerce-app-oop-projec.vercel.app")
                 .allowedMethods("*")
                 .allowedHeaders("*");
     }
