@@ -15,7 +15,7 @@ export default function ProductCard({ product, wishlistIds = [], onWishlistChang
   const inWishlist = wishlistIds.includes(product.id);
 
   const img = product.imageUrls?.[0]
-    ? `http://localhost:8080${product.imageUrls[0]}`
+    ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${product.imageUrls[0]}`
     : null;
 
   const handleAddToCart = async (e) => {
