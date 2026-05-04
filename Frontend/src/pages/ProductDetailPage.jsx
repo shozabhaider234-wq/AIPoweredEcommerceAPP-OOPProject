@@ -86,7 +86,7 @@ export default function ProductDetailPage() {
   if (!product) return <div className="container page-content"><InfoBar type="error">Product not found.</InfoBar></div>;
 
   const images = product.imageUrls?.length ? product.imageUrls : [];
-  const mainImg = images[selectedImg] ? `http://localhost:8080${images[selectedImg]}` : null;
+  const mainImg = images[selectedImg] ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${images[selectedImg]}` : null;
 
   return (
     <div className="container page-content">
