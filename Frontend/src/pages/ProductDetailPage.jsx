@@ -117,7 +117,7 @@ export default function ProductDetailPage() {
                   overflow: 'hidden', border: `2px solid ${i === selectedImg ? 'var(--ink)' : 'var(--border)'}`,
                   padding: 0, background: 'var(--surface-3)', cursor: 'pointer',
                 }}>
-                  <img src={`http://localhost:8080${url}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={`${import.meta.env.VITE_API_URL}${url}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </button>
               ))}
             </div>
